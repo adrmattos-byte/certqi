@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Cert QI — Certificação Digital. Sua identidade. Seus negócios. Sempre seguros. e-CPF, e-CNPJ, NF-e 100% online." />
+  <title>Cert QI | Certificação Digital</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; color: #0D1B3E; background: #fff; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+    :root {
+      --navy:       #0D1B3E;
+      --navy-mid:   #1A3A6E;
+      --blue:       #1A4BAF;
+      --cyan:       #0099CC;
+      --cyan-light: #E3F4FB;
+      --cyan-glow:  rgba(0,153,204,0.18);
+      --grad:       linear-gradient(135deg, #1A4BAF 0%, #0099CC 100%);
+      --grad-dark:  linear-gradient(135deg, #0D1B3E 0%, #1A4BAF 100%);
+      --white:      #ffffff;
+      --gray-50:    #f5f7fc;
+      --gray-100:   #eaecf5;
+      --gray-200:   #d5d9ea;
+      --text-muted: #4f5f82;
+      --radius:     10px;
+      --radius-lg:  16px;
+      --radius-xl:  24px;
+      --shadow-sm:  0 2px 12px rgba(13,27,62,0.08);
+      --shadow-md:  0 8px 32px rgba(13,27,62,0.13);
+      --shadow-lg:  0 20px 60px rgba(13,27,62,0.2);
+    }
+
+    /* UTILITIES */
+    .container { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+    .section    { padding: 84px 0; }
+    .text-center { text-align: center; }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp   { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes float    { 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-9px); } }
+    @keyframes pulseRing{ 0%{ transform:scale(1); opacity:.6; } 100%{ transform:scale(1.55); opacity:0; } }
+    @keyframes shimmerX { 0%{ background-position:-600px 0; } 100%{ background-position:600px 0; } }
+
+    .fade-up { opacity:0; transform:translateY(28px); transition: opacity .65s ease, transform .65s ease; }
+    .fade-up.visible { opacity:1; transform:translateY(0); }
+    .delay-1 { transition-delay: .1s; }
+    .delay-2 { transition-delay: .2s; }
+    .delay-3 { transition-delay: .3s; }
+
+    /* ── NAVBAR ── */
+    .navbar {
+      position: fixed; top:0; left:0; right:0; z-index:100;
+      padding: 18px 0;
+      transition: background .3s, box-shadow .3s, padding .3s;
+    }
+    .navbar.scrolled {
+      background: rgba(13,27,62,0.97);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 2px 24px rgba(0,0,0,.3);
+      padding: 12px 0;
+    }
+    .navbar-inner { display:flex; align-items:center; justify-content:space-between; }
+
+    /* LOGO via IMG */
+    .nav-logo img { height: 42px; width: auto; display:block; filter: brightness(0) invert(1); }
+    .navbar.scrolled .nav-logo img { filter: brightness(0) invert(1); }
+
+    .nav-links { display:flex; align-items:center; gap:30px; list-style:none; }
+    .nav-links a { color:rgba(255,255,255,.75); text-decoration:none; font-size:14px; font-weight:500; transition:color .2s; }
+    .nav-links a:hover { color:#fff; }
+    .nav-cta {
+      background: var(--grad) !important;
+      color: #fff !important;
+      padding: 9px 22px;
+      border-radius: var(--radius);
+      font-weight: 600 !important;
+      font-size: 14px;
+      transition: opacity .2s, transform .15s !important;
+      box-shadow: 0 3px 14px rgba(0,153,204,.35);
+    }
+    .nav-cta:hover { opacity:.88; transform:translateY(-1px); }
+
+    .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; background:none; border:none; padding:4px; }
+    .hamburger span { display:block; width:24px; height:2px; background:#fff; border-radius:2px; transition:all .3s; }
+    .mobile-menu {
+      display:none; position:fixed; inset:0; background:var(--navy);
+      z-index:99; flex-direction:column; align-items:center; justify-content:center; gap:32px;
+    }
+    .mobile-menu.open { display:flex; }
+    .mobile-menu a { color:#fff; text-decoration:none; font-family:'Sora',sans-serif; font-size:24px; font-weight:600; }
+    .mobile-close { position:absolute; top:24px; right:24px; background:none; border:none; color:#fff; font-size:32px; cursor:pointer; line-height:1; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      background: var(--navy);
+      position: relative;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+    /* Geometric bg pattern */
+    .hero-pattern {
+      position: absolute; inset:0;
+      background-image:
+        linear-gradient(rgba(26,75,175,.12) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(26,75,175,.12) 1px, transparent 1px);
+      background-size: 56px 56px;
+    }
+    .hero-glow {
+      position:absolute; inset:0;
+      background:
+        radial-gradient(ellipse 55% 65% at 75% 35%, rgba(0,153,204,.16) 0%, transparent 65%),
+        radial-gradient(ellipse 35% 45% at 15% 75%, rgba(26,75,175,.14) 0%, transparent 60%);
+    }
+    /* Decorative shield shape */
+    .hero-deco {
+      position:absolute; right:-80px; top:50%; transform:translateY(-50%);
+      width:520px; height:520px;
+      border-radius:50%;
+      border: 1px solid rgba(0,153,204,.12);
+      pointer-events:none;
+    }
+    .hero-deco::before {
+      content:''; position:absolute; inset:40px;
+      border-radius:50%;
+      border: 1px solid rgba(0,153,204,.1);
+    }
+    .hero-deco::after {
+      content:''; position:absolute; inset:100px;
+      border-radius:50%;
+      border: 1px solid rgba(0,153,204,.08);
+    }
+
+    .hero-inner {
+      display:grid; grid-template-columns:1fr 1fr;
+      align-items:center; gap:64px;
+      position:relative; z-index:2;
+      padding: 130px 0 90px;
+    }
+    .hero-badge {
+      display:inline-flex; align-items:center; gap:8px;
+      background: rgba(0,153,204,.14);
+      border: 1px solid rgba(0,153,204,.35);
+      color: var(--cyan);
+      padding: 6px 16px; border-radius:24px;
+      font-size:12px; font-weight:600; letter-spacing:.5px;
+      margin-bottom:22px;
+      animation: fadeUp .6s ease both;
+    }
+    .hero-logo-img {
+      display:block; margin-bottom:28px; max-width:320px;
+      filter: brightness(0) invert(1);
+      animation: fadeUp .6s .05s ease both;
+    }
+    .hero-title {
+      font-family:'Sora',sans-serif;
+      font-size: clamp(34px,4vw,52px);
+      font-weight:800; color:#fff;
+      line-height:1.15; letter-spacing:-1px;
+      margin-bottom:18px;
+      animation: fadeUp .6s .1s ease both;
+    }
+    .hero-title .hl { color: var(--cyan); }
+    .hero-tagline {
+      font-family:'Sora',sans-serif;
+      font-size:16px; font-weight:600;
+      margin-bottom:14px;
+      animation: fadeUp .6s .15s ease both;
+    }
+    .hero-tagline span:nth-child(1),
+    .hero-tagline span:nth-child(2) { color:rgba(255,255,255,.7); }
+    .hero-tagline span:nth-child(3) { color:var(--cyan); }
+    .hero-sub {
+      color:rgba(255,255,255,.58); font-size:16px; line-height:1.75;
+      margin-bottom:36px; max-width:480px;
+      animation: fadeUp .6s .2s ease both;
+    }
+    .hero-actions { display:flex; gap:14px; flex-wrap:wrap; margin-bottom:44px; animation: fadeUp .6s .25s ease both; }
+    .btn-primary {
+      display:inline-flex; align-items:center; gap:8px;
+      background: var(--grad);
+      color:#fff; padding:14px 28px; border-radius:var(--radius);
+      font-family:'Sora',sans-serif; font-size:15px; font-weight:600;
+      border:none; cursor:pointer; text-decoration:none;
+      transition: opacity .2s, transform .15s, box-shadow .2s;
+      box-shadow: 0 4px 22px rgba(0,153,204,.4);
+    }
+    .btn-primary:hover { opacity:.88; transform:translateY(-2px); box-shadow:0 8px 30px rgba(0,153,204,.5); }
+    .btn-outline {
+      display:inline-flex; align-items:center; gap:8px;
+      background:transparent; color:rgba(255,255,255,.85);
+      padding:13px 24px; border-radius:var(--radius);
+      font-family:'Sora',sans-serif; font-size:15px; font-weight:500;
+      border:1.5px solid rgba(255,255,255,.28); cursor:pointer; text-decoration:none;
+      transition: border-color .2s, color .2s, background .2s;
+    }
+    .btn-outline:hover { border-color:rgba(255,255,255,.65); color:#fff; background:rgba(255,255,255,.05); }
+    .hero-trust { display:flex; align-items:center; gap:20px; flex-wrap:wrap; animation: fadeUp .6s .3s ease both; }
+    .trust-item { display:flex; align-items:center; gap:6px; color:rgba(255,255,255,.5); font-size:13px; }
+    .trust-item i { color:var(--cyan); font-size:16px; }
+    .trust-div  { width:1px; height:14px; background:rgba(255,255,255,.18); }
+
+    /* Hero card */
+    .hero-card-wrap { animation: fadeUp .6s .2s ease both; display:flex; justify-content:center; }
+    .hero-card {
+      background:rgba(255,255,255,.055);
+      border:1px solid rgba(255,255,255,.11);
+      border-radius:var(--radius-xl); padding:32px;
+      width:100%; max-width:390px;
+      animation: float 4.5s ease-in-out infinite;
+      backdrop-filter:blur(8px);
+    }
+    .hc-header { display:flex; align-items:center; gap:14px; margin-bottom:24px; }
+    .hc-icon {
+      width:50px; height:50px; border-radius:12px;
+      background:var(--grad); display:flex; align-items:center; justify-content:center;
+      color:#fff; font-size:24px;
+    }
+    .hc-title { color:#fff; font-family:'Sora',sans-serif; font-size:16px; font-weight:700; }
+    .hc-sub   { color:rgba(255,255,255,.45); font-size:12px; margin-top:2px; }
+    .hc-row   {
+      display:flex; justify-content:space-between; align-items:center;
+      padding:11px 0; border-bottom:1px solid rgba(255,255,255,.07);
+    }
+    .hc-row:last-of-type { border:none; }
+    .hc-label { color:rgba(255,255,255,.45); font-size:13px; }
+    .hc-val   { color:#fff; font-size:13px; font-weight:500; }
+    .hc-status {
+      display:inline-flex; align-items:center; gap:5px;
+      background:rgba(0,153,204,.2); color:var(--cyan);
+      border-radius:20px; padding:3px 10px; font-size:11px; font-weight:600;
+    }
+    .pulse-dot { width:7px; height:7px; border-radius:50%; background:var(--cyan); position:relative; }
+    .pulse-dot::after {
+      content:''; position:absolute; inset:-3px; border-radius:50%;
+      border:1.5px solid var(--cyan); animation:pulseRing 1.4s ease-out infinite;
+    }
+    .hc-price { color:#fff; font-family:'Sora',sans-serif; font-size:26px; font-weight:800; }
+    .hc-btn {
+      margin-top:20px; width:100%; background:var(--grad);
+      color:#fff; border:none; border-radius:var(--radius); padding:13px;
+      font-family:'Sora',sans-serif; font-size:14px; font-weight:600;
+      cursor:pointer; transition:opacity .2s;
+      display:flex; align-items:center; justify-content:center; gap:8px;
+      text-decoration:none;
+    }
+    .hc-btn:hover { opacity:.85; }
+
+    /* ── STATS ── */
+    .stats-bar { background:var(--navy); border-top:1px solid rgba(0,153,204,.18); border-bottom:1px solid rgba(0,153,204,.18); }
+    .stats-inner { display:grid; grid-template-columns:repeat(4,1fr); }
+    @media (max-width:700px) { .stats-inner { grid-template-columns:repeat(2,1fr); } }
+    .stat-block { padding:28px 20px; text-align:center; border-right:1px solid rgba(255,255,255,.06); }
+    .stat-block:last-child { border:none; }
+    .stat-num { font-family:'Sora',sans-serif; font-size:30px; font-weight:800; color:#fff; line-height:1; margin-bottom:6px; }
+    .stat-num span { background:var(--grad); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .stat-label { color:rgba(255,255,255,.4); font-size:13px; }
+
+    /* ── SECTION HEADER ── */
+    .sec-eyebrow {
+      display:inline-block; font-size:12px; font-weight:700; letter-spacing:1.5px;
+      text-transform:uppercase; margin-bottom:12px;
+      background:var(--grad); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+    }
+    .sec-title {
+      font-family:'Sora',sans-serif; font-size:clamp(26px,3vw,38px);
+      font-weight:800; color:var(--navy); line-height:1.2; letter-spacing:-.5px; margin-bottom:14px;
+    }
+    .sec-sub { color:var(--text-muted); font-size:16px; max-width:540px; margin:0 auto 56px; line-height:1.75; }
+    .sec-title-w { font-family:'Sora',sans-serif; font-size:clamp(26px,3vw,38px); font-weight:800; color:#fff; line-height:1.2; letter-spacing:-.5px; margin-bottom:14px; }
+    .sec-sub-w   { color:rgba(255,255,255,.5); font-size:16px; max-width:540px; margin:0 auto 56px; line-height:1.75; }
+
+    /* ── PRODUTOS ── */
+    .products-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:22px; max-width:780px; margin:0 auto; }
+    .prod-card {
+      background:#fff; border:1px solid var(--gray-200);
+      border-radius:var(--radius-lg); padding:28px 24px;
+      position:relative; overflow:hidden;
+      transition: transform .25s, box-shadow .25s;
+    }
+    .prod-card::after {
+      content:''; position:absolute; top:0; left:0; right:0; height:3px;
+      background:var(--grad); transform:scaleX(0); transition:transform .3s ease;
+    }
+    .prod-card:hover { transform:translateY(-5px); box-shadow:var(--shadow-md); }
+    .prod-card:hover::after { transform:scaleX(1); }
+    .prod-card.featured {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 1px var(--blue), var(--shadow-md);
+    }
+    .prod-card.featured::after { transform:scaleX(1); }
+    .feat-badge {
+      position:absolute; top:16px; right:16px;
+      background:var(--grad); color:#fff;
+      font-size:10px; font-weight:700; padding:4px 10px;
+      border-radius:20px; letter-spacing:.5px; text-transform:uppercase;
+    }
+    .prod-icon {
+      width:50px; height:50px; border-radius:12px;
+      display:flex; align-items:center; justify-content:center; font-size:22px;
+      margin-bottom:16px;
+      background:var(--cyan-light); color:var(--blue);
+    }
+    .prod-card.featured .prod-icon { background:var(--grad); color:#fff; }
+    .prod-name { font-family:'Sora',sans-serif; font-size:18px; font-weight:700; color:var(--navy); margin-bottom:6px; }
+    .prod-desc { font-size:13px; color:var(--text-muted); line-height:1.65; margin-bottom:18px; min-height:52px; }
+    .prod-tags { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:18px; }
+    .prod-tag { background:var(--gray-50); color:var(--text-muted); font-size:11px; font-weight:500; padding:3px 10px; border-radius:20px; border:1px solid var(--gray-100); }
+    .prod-hr { border:none; border-top:1px solid var(--gray-100); margin:18px 0; }
+    .prod-price { font-family:'Sora',sans-serif; font-size:28px; font-weight:800; color:var(--navy); }
+    .prod-price sup { font-size:14px; vertical-align:top; margin-top:6px; }
+    .prod-validity { font-size:12px; color:var(--text-muted); }
+    .prod-alt { font-size:12px; margin-top:6px; background:var(--grad); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; font-weight:500; }
+    .prod-btn {
+      display:flex; align-items:center; justify-content:center; gap:8px;
+      margin-top:20px; width:100%; padding:12px;
+      border-radius:var(--radius); font-family:'Sora',sans-serif; font-size:14px; font-weight:600;
+      cursor:pointer; text-decoration:none; transition:all .2s;
+      border:1.5px solid var(--blue); color:var(--blue); background:transparent;
+    }
+    .prod-btn:hover, .prod-card.featured .prod-btn { background:var(--grad); color:#fff; border-color:transparent; }
+
+    /* ── COMO FUNCIONA ── */
+    .how-sec { background:var(--navy); position:relative; overflow:hidden; }
+    .how-bg {
+      position:absolute; inset:0;
+      background:
+        radial-gradient(ellipse 50% 80% at 80% 50%, rgba(0,153,204,.13) 0%, transparent 70%),
+        linear-gradient(rgba(26,75,175,.07) 1px, transparent 1px) 0 0 / 56px 56px,
+        linear-gradient(90deg, rgba(26,75,175,.07) 1px, transparent 1px) 0 0 / 56px 56px;
+    }
+    .steps-wrap { position:relative; }
+    .steps-line {
+      position:absolute; top:36px; left:calc(12.5%); right:calc(12.5%);
+      height:1px; background:linear-gradient(90deg, transparent, rgba(0,153,204,.3) 20%, rgba(0,153,204,.3) 80%, transparent);
+      z-index:0;
+    }
+    .steps-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:0; position:relative; z-index:1; }
+    .step-item { padding:0 20px; text-align:center; }
+    .step-circle {
+      width:72px; height:72px; border-radius:50%;
+      background:rgba(0,153,204,.12); border:1.5px solid rgba(0,153,204,.35);
+      display:flex; align-items:center; justify-content:center;
+      font-family:'Sora',sans-serif; font-size:20px; font-weight:800; color:var(--cyan);
+      margin:0 auto 20px; position:relative; z-index:1;
+      transition:background .3s, border-color .3s;
+    }
+    .step-item:hover .step-circle { background:var(--grad); border-color:transparent; color:#fff; }
+    .step-title { font-family:'Sora',sans-serif; font-size:15px; font-weight:700; color:#fff; margin-bottom:8px; }
+    .step-desc  { font-size:13px; color:rgba(255,255,255,.5); line-height:1.65; }
+
+    /* ── PARA QUEM ── */
+    .audience-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+    .aud-card {
+      background:var(--gray-50); border:1px solid var(--gray-100);
+      border-radius:var(--radius-lg); padding:28px 24px;
+      transition:transform .25s, box-shadow .25s;
+    }
+    .aud-card:hover { transform:translateY(-3px); box-shadow:var(--shadow-sm); }
+    .aud-icon { width:54px; height:54px; border-radius:14px; background:var(--grad); display:flex; align-items:center; justify-content:center; color:#fff; font-size:24px; margin-bottom:16px; }
+    .aud-title { font-family:'Sora',sans-serif; font-size:17px; font-weight:700; color:var(--navy); margin-bottom:8px; }
+    .aud-desc  { font-size:14px; color:var(--text-muted); line-height:1.65; }
+    .aud-list  { list-style:none; margin-top:14px; display:flex; flex-direction:column; gap:7px; }
+    .aud-list li { font-size:13px; color:var(--text-muted); display:flex; align-items:center; gap:8px; }
+    .aud-list li i { color:var(--cyan); font-size:14px; flex-shrink:0; }
+
+    /* ── DIFERENCIAIS ── */
+    .diff-sec { background:var(--gray-50); }
+    .diff-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
+    .diff-item {
+      background:#fff; border:1px solid var(--gray-100);
+      border-radius:var(--radius-lg); padding:24px;
+      display:flex; gap:18px; align-items:flex-start;
+      transition:box-shadow .25s;
+    }
+    .diff-item:hover { box-shadow:var(--shadow-sm); }
+    .diff-icon { width:46px; height:46px; border-radius:12px; background:var(--cyan-light); color:var(--blue); display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; }
+    .diff-title { font-family:'Sora',sans-serif; font-size:15px; font-weight:700; color:var(--navy); margin-bottom:5px; }
+    .diff-desc  { font-size:13px; color:var(--text-muted); line-height:1.65; }
+
+    /* ── DEPOIMENTOS ── */
+    .test-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+    .test-card {
+      background:#fff; border:1px solid var(--gray-100);
+      border-radius:var(--radius-lg); padding:28px 24px; position:relative;
+    }
+    .test-card::before {
+      content:'"'; position:absolute; top:14px; right:18px;
+      font-family:'Sora',sans-serif; font-size:80px; color:var(--cyan-light);
+      line-height:1; font-weight:800;
+    }
+    .stars { display:flex; gap:3px; margin-bottom:14px; }
+    .stars i { color:#f59e0b; font-size:15px; }
+    .test-text { font-size:14px; color:var(--text-muted); line-height:1.75; font-style:italic; margin-bottom:20px; }
+    .test-footer { display:flex; align-items:center; gap:12px; }
+    .test-avatar {
+      width:40px; height:40px; border-radius:50%; background:var(--grad);
+      display:flex; align-items:center; justify-content:center;
+      font-family:'Sora',sans-serif; font-size:13px; font-weight:700; color:#fff; flex-shrink:0;
+    }
+    .test-name { font-family:'Sora',sans-serif; font-size:14px; font-weight:600; color:var(--navy); }
+    .test-role { font-size:12px; color:var(--text-muted); margin-top:1px; }
+
+    /* ── FAQ ── */
+    .faq-list { max-width:720px; margin:0 auto; display:flex; flex-direction:column; gap:10px; }
+    .faq-item { background:#fff; border:1px solid var(--gray-100); border-radius:var(--radius); overflow:hidden; }
+    .faq-item.open { box-shadow:var(--shadow-sm); }
+    .faq-btn {
+      width:100%; background:none; border:none; padding:18px 20px;
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      cursor:pointer; text-align:left;
+      font-family:'Sora',sans-serif; font-size:15px; font-weight:600; color:var(--navy);
+      transition:background .2s;
+    }
+    .faq-btn:hover { background:var(--gray-50); }
+    .faq-btn i { font-size:18px; color:var(--cyan); transition:transform .3s; flex-shrink:0; }
+    .faq-item.open .faq-btn i { transform:rotate(45deg); }
+    .faq-body { max-height:0; overflow:hidden; transition:max-height .35s ease; }
+    .faq-item.open .faq-body { max-height:300px; }
+    .faq-body-inner { padding:0 20px 18px; font-size:14px; color:var(--text-muted); line-height:1.8; }
+
+    /* ── CTA FINAL ── */
+    .cta-sec { background:var(--navy); position:relative; overflow:hidden; }
+    .cta-bg {
+      position:absolute; inset:0;
+      background:
+        radial-gradient(ellipse 60% 80% at 50% 50%, rgba(0,153,204,.17) 0%, transparent 70%),
+        linear-gradient(rgba(26,75,175,.06) 1px, transparent 1px) 0 0 / 56px 56px,
+        linear-gradient(90deg, rgba(26,75,175,.06) 1px, transparent 1px) 0 0 / 56px 56px;
+    }
+    .cta-inner { position:relative; z-index:1; padding:84px 0; text-align:center; }
+    .cta-logo  { display:block; margin:0 auto 24px; height:56px; filter:brightness(0) invert(1); }
+    .cta-title { font-family:'Sora',sans-serif; font-size:clamp(28px,3.5vw,44px); font-weight:800; color:#fff; letter-spacing:-.5px; margin-bottom:14px; }
+    .cta-sub   { color:rgba(255,255,255,.55); font-size:16px; max-width:480px; margin:0 auto 36px; line-height:1.75; }
+    .cta-tagline { font-family:'Sora',sans-serif; font-size:14px; font-weight:600; margin-bottom:32px; }
+    .cta-tagline span { color:rgba(255,255,255,.55); }
+    .cta-tagline .hl { color:var(--cyan); }
+    .cta-actions { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+    .btn-wa {
+      display:inline-flex; align-items:center; gap:10px;
+      background:#25D366; color:#fff; padding:15px 30px;
+      border-radius:var(--radius); font-family:'Sora',sans-serif; font-size:15px; font-weight:700;
+      text-decoration:none; border:none; cursor:pointer;
+      transition:background .2s, transform .15s;
+      box-shadow:0 4px 20px rgba(37,211,102,.4);
+    }
+    .btn-wa:hover { background:#1da851; transform:translateY(-2px); }
+    .btn-wa i { font-size:20px; }
+
+    /* ── FOOTER ── */
+    footer { background:#070f25; border-top:1px solid rgba(255,255,255,.05); padding:52px 0 28px; }
+    .footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:40px; margin-bottom:40px; }
+    .footer-logo { display:block; height:40px; filter:brightness(0) invert(1); margin-bottom:14px; }
+    .footer-tag  { color:rgba(255,255,255,.38); font-size:13px; line-height:1.75; max-width:230px; }
+    .footer-col-title { font-family:'Sora',sans-serif; font-size:12px; font-weight:700; color:rgba(255,255,255,.45); text-transform:uppercase; letter-spacing:1px; margin-bottom:16px; }
+    .footer-links { list-style:none; display:flex; flex-direction:column; gap:10px; }
+    .footer-links a { color:rgba(255,255,255,.38); text-decoration:none; font-size:14px; transition:color .2s; }
+    .footer-links a:hover { color:var(--cyan); }
+    .footer-bottom { border-top:1px solid rgba(255,255,255,.05); padding-top:24px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+    .footer-copy { color:rgba(255,255,255,.25); font-size:13px; }
+    .footer-icp {
+      display:inline-flex; align-items:center; gap:6px;
+      background:rgba(0,153,204,.1); border:1px solid rgba(0,153,204,.2);
+      color:var(--cyan); border-radius:20px; padding:4px 14px; font-size:11px; font-weight:600;
+    }
+
+    /* ── WA FLOAT ── */
+    .wa-float {
+      position:fixed; bottom:28px; right:28px; z-index:99;
+      width:58px; height:58px; border-radius:50%;
+      background:#25D366; display:flex; align-items:center; justify-content:center;
+      color:#fff; font-size:28px; text-decoration:none;
+      box-shadow:0 4px 20px rgba(37,211,102,.5);
+      transition:transform .2s, box-shadow .2s;
+    }
+    .wa-float:hover { transform:scale(1.1); box-shadow:0 8px 28px rgba(37,211,102,.6); }
+    .wa-float::before {
+      content:''; position:absolute; inset:-4px; border-radius:50%;
+      border:2px solid rgba(37,211,102,.4); animation:pulseRing 2s ease-out infinite;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width:900px) {
+      .hero-inner { grid-template-columns:1fr; gap:40px; padding:110px 0 64px; }
+      .hero-card-wrap { display:none; }
+      .hero-logo-img { max-width:240px; }
+      .products-grid, .audience-grid, .test-grid { grid-template-columns:1fr; max-width:460px; margin:0 auto; }
+      .steps-grid { grid-template-columns:repeat(2,1fr); gap:32px; }
+      .steps-line { display:none; }
+      .diff-grid { grid-template-columns:1fr; }
+      .stats-inner { grid-template-columns:repeat(2,1fr); }
+      .footer-grid { grid-template-columns:1fr 1fr; }
+      .nav-links { display:none; }
+      .hamburger { display:flex; }
+    }
+    @media (max-width:560px) {
+      .section { padding:56px 0; }
+      .steps-grid { grid-template-columns:1fr; }
+      .stats-inner { grid-template-columns:1fr 1fr; }
+      .footer-grid { grid-template-columns:1fr; }
+      .footer-bottom { flex-direction:column; text-align:center; }
+      .cta-actions, .hero-actions { flex-direction:column; align-items:flex-start; }
+      .cta-actions { align-items:center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- WA FLOAT -->
+<a href="https://wa.me/5548992174132?text=Ol%C3%A1!%20Quero%20emitir%20meu%20certificado%20digital." class="wa-float" aria-label="WhatsApp" target="_blank" rel="noopener">
+  <i class="ti ti-brand-whatsapp"></i>
+</a>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" id="mobileClose">&times;</button>
+  <a href="#produtos"       onclick="closeMobile()">Produtos</a>
+  <a href="#como-funciona"  onclick="closeMobile()">Como funciona</a>
+  <a href="#faq"            onclick="closeMobile()">Dúvidas</a>
+  <a href="https://wa.me/5548992174132" class="btn-primary" style="font-size:16px;padding:14px 32px" target="_blank" rel="noopener">
+    <i class="ti ti-brand-whatsapp"></i> Emitir agora
+  </a>
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="container">
+    <div class="navbar-inner">
+      <a href="#" class="nav-logo">
+        <!-- Logo em branco: arquivo enviado pelo usuário -->
+        <img src="logo-certqi.png" alt="Cert QI Certificação Digital" />
+      </a>
+      <ul class="nav-links">
+        <li><a href="#produtos">Produtos</a></li>
+        <li><a href="#como-funciona">Como funciona</a></li>
+        <li><a href="#para-quem">Para quem</a></li>
+        <li><a href="#faq">Dúvidas</a></li>
+        <li>
+          <a href="https://wa.me/5548992174132" class="nav-cta" target="_blank" rel="noopener">
+            <i class="ti ti-brand-whatsapp"></i> Emitir agora
+          </a>
+        </li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="inicio">
+  <div class="hero-pattern"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-deco"></div>
+  <div class="container">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-badge"><i class="ti ti-shield-check"></i> Certificado ICP-Brasil — Válido em todo o Brasil</div>
+        <!-- Logo no hero -->
+        <img src="logo-certqi.png" alt="Cert QI" class="hero-logo-img" />
+        <h1 class="hero-title">
+          Seu certificado digital em <span class="hl">minutos</span>, sem sair de casa
+        </h1>
+        <p class="hero-tagline">
+          <span>Sua identidade.&nbsp;</span>
+          <span>Seus negócios.&nbsp;</span>
+          <span>Sempre seguros.</span>
+        </p>
+        <p class="hero-sub">
+          e-CPF, e-CNPJ, NF-e e muito mais. Processo 100% digital por videoconferência, com validade jurídica plena e suporte especializado.
+        </p>
+        <div class="hero-actions">
+          <a href="https://wa.me/5548992174132?text=Quero%20emitir%20meu%20certificado%20digital." class="btn-primary" target="_blank" rel="noopener">
+            <i class="ti ti-certificate"></i> Emitir meu certificado
+          </a>
+          <a href="#como-funciona" class="btn-outline">
+            <i class="ti ti-play"></i> Como funciona
+          </a>
+        </div>
+        <div class="hero-trust">
+          <div class="trust-item"><i class="ti ti-lock"></i> 100% seguro</div>
+          <div class="trust-div"></div>
+          <div class="trust-item"><i class="ti ti-video"></i> Videoconferência</div>
+          <div class="trust-div"></div>
+          <div class="trust-item"><i class="ti ti-clock"></i> Emissão em 5 min</div>
+        </div>
+      </div>
+      <div class="hero-card-wrap">
+        <div class="hero-card">
+          <div class="hc-header">
+            <div class="hc-icon"><i class="ti ti-certificate"></i></div>
+            <div>
+              <div class="hc-title">e-CNPJ A1 — 1 Ano</div>
+              <div class="hc-sub">Certificado Pessoa Jurídica</div>
+            </div>
+          </div>
+          <div class="hc-row"><span class="hc-label">Tipo</span><span class="hc-val">e-CNPJ A1 digital</span></div>
+          <div class="hc-row"><span class="hc-label">Validade</span><span class="hc-val">12 meses</span></div>
+          <div class="hc-row"><span class="hc-label">Validação</span><span class="hc-val">Videoconferência</span></div>
+          <div class="hc-row">
+            <span class="hc-label">Status</span>
+            <span class="hc-val">
+              <span class="hc-status"><span class="pulse-dot"></span> Disponível</span>
+            </span>
+          </div>
+          <div class="hc-row">
+            <span class="hc-price">R$ 229</span>
+            <span class="hc-label" style="font-size:12px">PIX · cartão · boleto</span>
+          </div>
+          <a href="https://wa.me/5548992174132?text=Quero%20emitir%20meu%20e-CNPJ%20A1." class="hc-btn" target="_blank" rel="noopener">
+            <i class="ti ti-brand-whatsapp"></i> Contratar agora
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="container">
+    <div class="stats-inner">
+      <div class="stat-block fade-up"><div class="stat-num"><span>100%</span></div><div class="stat-label">processo online</div></div>
+      <div class="stat-block fade-up delay-1"><div class="stat-num"><span>5</span> min</div><div class="stat-label">tempo médio de emissão</div></div>
+      <div class="stat-block fade-up delay-2"><div class="stat-num"><span>ICP</span>-BR</div><div class="stat-label">credenciado e regulamentado</div></div>
+      <div class="stat-block fade-up delay-3"><div class="stat-num"><span>2</span> tipos</div><div class="stat-label">e-CPF e e-CNPJ disponíveis</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUTOS -->
+<section class="section" id="produtos">
+  <div class="container">
+    <div class="text-center fade-up">
+      <div class="sec-eyebrow">Nossos produtos</div>
+      <h2 class="sec-title">Certificado digital para cada necessidade</h2>
+      <p class="sec-sub">Escolha o certificado ideal para você ou para sua empresa. Todos com validade jurídica plena e emissão 100% online.</p>
+    </div>
+    <div class="products-grid fade-up">
+      <div class="prod-card">
+        <div class="prod-icon"><i class="ti ti-user-check"></i></div>
+        <div class="prod-name">e-CPF A1</div>
+        <div class="prod-desc">Certificado digital para pessoa física. Armazenado no computador ou celular. Ideal para autônomos e profissionais liberais.</div>
+        <div class="prod-tags">
+          <span class="prod-tag">Gov.br</span>
+          <span class="prod-tag">Assinatura digital</span>
+          <span class="prod-tag">Receita Federal</span>
+        </div>
+        <hr class="prod-hr" />
+        <div style="display:flex;justify-content:space-between;align-items:flex-end">
+          <div class="prod-price"><sup>R$</sup>139</div>
+          <div class="prod-validity">1 ano de validade</div>
+        </div>
+        <a href="https://wa.me/5548992174132?text=Quero%20emitir%20meu%20e-CPF%20A1." class="prod-btn" target="_blank" rel="noopener">
+          <i class="ti ti-brand-whatsapp"></i> Contratar
+        </a>
+      </div>
+      <div class="prod-card featured">
+        <div class="feat-badge">Mais vendido</div>
+        <div class="prod-icon"><i class="ti ti-building-store"></i></div>
+        <div class="prod-name">e-CNPJ A1</div>
+        <div class="prod-desc">Certificado digital para empresa. Indispensável para NF-e, eSocial, SPED, e-CAC e sistemas do governo federal.</div>
+        <div class="prod-tags">
+          <span class="prod-tag">NF-e</span>
+          <span class="prod-tag">eSocial</span>
+          <span class="prod-tag">SPED</span>
+          <span class="prod-tag">e-CAC</span>
+        </div>
+        <hr class="prod-hr" />
+        <div style="display:flex;justify-content:space-between;align-items:flex-end">
+          <div class="prod-price"><sup>R$</sup>149</div>
+          <div class="prod-validity">1 ano de validade</div>
+        </div>
+        <a href="https://wa.me/5548992174132?text=Quero%20emitir%20meu%20e-CNPJ%20A1." class="prod-btn" target="_blank" rel="noopener">
+          <i class="ti ti-brand-whatsapp"></i> Contratar
+        </a>
+      </div>
+
+    </div>
+    <div class="text-center" style="margin-top:28px">
+      <p style="font-size:14px;color:var(--text-muted)">
+        <i class="ti ti-info-circle" style="vertical-align:-2px;color:var(--cyan)"></i>
+        Outro tipo ou validade? <a href="https://wa.me/5548992174132" style="color:var(--blue);font-weight:500;text-decoration:none" target="_blank" rel="noopener">Fale conosco</a> — atendemos todas as necessidades.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- COMO FUNCIONA -->
+<section class="section how-sec" id="como-funciona">
+  <div class="how-bg"></div>
+  <div class="container" style="position:relative;z-index:1">
+    <div class="text-center fade-up">
+      <div class="sec-eyebrow" style="color:var(--cyan)">Processo simplificado</div>
+      <h2 class="sec-title-w">Como emitir seu certificado</h2>
+      <p class="sec-sub-w">Tudo online em 4 etapas simples. Sem filas, sem cartório, sem burocracia.</p>
+    </div>
+    <div class="steps-wrap fade-up">
+      <div class="steps-line"></div>
+      <div class="steps-grid">
+        <div class="step-item">
+          <div class="step-circle">1</div>
+          <div class="step-title">Escolha o plano</div>
+          <div class="step-desc">Selecione o tipo e a validade do certificado ideal para o seu perfil</div>
+        </div>
+        <div class="step-item">
+          <div class="step-circle">2</div>
+          <div class="step-title">Pague online</div>
+          <div class="step-desc">PIX, cartão ou boleto. Confirmação instantânea após o pagamento</div>
+        </div>
+        <div class="step-item">
+          <div class="step-circle">3</div>
+          <div class="step-title">Videoconferência</div>
+          <div class="step-desc">Validação de identidade em 5 minutos com câmera e documento em mãos</div>
+        </div>
+        <div class="step-item">
+          <div class="step-circle">4</div>
+          <div class="step-title">Baixe e use</div>
+          <div class="step-desc">Certificado disponível imediatamente. Instale e comece a usar na hora</div>
+        </div>
+      </div>
+    </div>
+    <div class="text-center fade-up" style="margin-top:52px">
+      <a href="https://wa.me/5548992174132?text=Quero%20emitir%20meu%20certificado%20digital." class="btn-primary" target="_blank" rel="noopener" style="font-size:16px;padding:16px 36px">
+        <i class="ti ti-brand-whatsapp"></i> Começar agora — é rápido e fácil
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- PARA QUEM -->
+<section class="section" id="para-quem">
+  <div class="container">
+    <div class="text-center fade-up">
+      <div class="sec-eyebrow">Para quem é</div>
+      <h2 class="sec-title">Para qualquer pessoa ou empresa</h2>
+      <p class="sec-sub">O certificado digital é obrigatório ou indispensável em dezenas de situações do dia a dia.</p>
+    </div>
+    <div class="audience-grid fade-up">
+      <div class="aud-card">
+        <div class="aud-icon"><i class="ti ti-user-tie"></i></div>
+        <div class="aud-title">Pessoa física</div>
+        <div class="aud-desc">Para profissionais liberais, autônomos e cidadãos que precisam de assinatura digital com validade jurídica.</div>
+        <ul class="aud-list">
+          <li><i class="ti ti-check"></i> Assinar contratos digitalmente</li>
+          <li><i class="ti ti-check"></i> Acessar gov.br com segurança</li>
+          <li><i class="ti ti-check"></i> Transações bancárias online</li>
+          <li><i class="ti ti-check"></i> Médicos, advogados, engenheiros</li>
+        </ul>
+      </div>
+      <div class="aud-card">
+        <div class="aud-icon"><i class="ti ti-building"></i></div>
+        <div class="aud-title">Empresas</div>
+        <div class="aud-desc">Obrigatório para emissão de NF-e, acesso ao eSocial, SPED, e-CAC e todos os sistemas fiscais federais.</div>
+        <ul class="aud-list">
+          <li><i class="ti ti-check"></i> Emissão de notas fiscais (NF-e)</li>
+          <li><i class="ti ti-check"></i> eSocial e folha de pagamento</li>
+          <li><i class="ti ti-check"></i> SPED contábil e fiscal</li>
+          <li><i class="ti ti-check"></i> Licitações e pregões eletrônicos</li>
+        </ul>
+      </div>
+      <div class="aud-card">
+        <div class="aud-icon"><i class="ti ti-briefcase"></i></div>
+        <div class="aud-title">MEI e pequenas empresas</div>
+        <div class="aud-desc">Mesmo o MEI precisa de certificado para emitir NF-e em muitos municípios. Emitimos de forma simples e rápida.</div>
+        <ul class="aud-list">
+          <li><i class="ti ti-check"></i> NF-e e NFS-e municipal</li>
+          <li><i class="ti ti-check"></i> Portal do Empreendedor</li>
+          <li><i class="ti ti-check"></i> Parcelamento PGFN</li>
+          <li><i class="ti ti-check"></i> Abertura e alteração de empresa</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIFERENCIAIS -->
+<section class="section diff-sec">
+  <div class="container">
+    <div class="text-center fade-up">
+      <div class="sec-eyebrow">Por que nos escolher</div>
+      <h2 class="sec-title">O que nos diferencia</h2>
+      <p class="sec-sub">Segurança, agilidade e suporte em cada etapa do processo.</p>
+    </div>
+    <div class="diff-grid fade-up">
+      <div class="diff-item">
+        <div class="diff-icon"><i class="ti ti-video"></i></div>
+        <div><div class="diff-title">100% online por videoconferência</div><div class="diff-desc">Validação de identidade em até 5 minutos por chamada de vídeo, de onde você estiver. Sem deslocamentos.</div></div>
+      </div>
+      <div class="diff-item">
+        <div class="diff-icon"><i class="ti ti-clock"></i></div>
+        <div><div class="diff-title">Emissão imediata</div><div class="diff-desc">Após a validação, o certificado fica disponível para download na hora. Sem esperar dias ou semanas.</div></div>
+      </div>
+      <div class="diff-item">
+        <div class="diff-icon"><i class="ti ti-headset"></i></div>
+        <div><div class="diff-title">Suporte especializado</div><div class="diff-desc">Nossa equipe acompanha todo o processo — da escolha do produto à instalação no seu dispositivo.</div></div>
+      </div>
+      <div class="diff-item">
+        <div class="diff-icon"><i class="ti ti-shield-check"></i></div>
+        <div><div class="diff-title">ICP-Brasil — segurança máxima</div><div class="diff-desc">Credenciados pelo ITI, garantindo validade jurídica plena em todo o território nacional.</div></div>
+      </div>
+      <div class="diff-item">
+        <div class="diff-icon"><i class="ti ti-credit-card"></i></div>
+        <div><div class="diff-title">Múltiplas formas de pagamento</div><div class="diff-desc">PIX com aprovação instantânea, cartão de crédito parcelado ou boleto bancário.</div></div>
+      </div>
+      <div class="diff-item">
+        <div class="diff-icon"><i class="ti ti-refresh"></i></div>
+        <div><div class="diff-title">Alerta de renovação</div><div class="diff-desc">Avisamos você antes do certificado vencer. Nunca fique sem certificado na hora que mais precisa.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEPOIMENTOS -->
+<section class="section">
+  <div class="container">
+    <div class="text-center fade-up">
+      <div class="sec-eyebrow">Depoimentos</div>
+      <h2 class="sec-title">O que nossos clientes dizem</h2>
+      <p class="sec-sub">Veja a experiência de quem já usa a Cert QI.</p>
+    </div>
+    <div class="test-grid fade-up">
+      <div class="test-card">
+        <div class="stars"><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i></div>
+        <div class="test-text">"Emiti o e-CNPJ em menos de 10 minutos, tudo pelo celular. Meu contador indicou e foi a melhor escolha. Sem filas, sem cartório, sem complicação."</div>
+        <div class="test-footer"><div class="test-avatar">AP</div><div><div class="test-name">Ana Paula M.</div><div class="test-role">Empresária · Florianópolis/SC</div></div></div>
+      </div>
+      <div class="test-card">
+        <div class="stars"><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i></div>
+        <div class="test-text">"Precisava do certificado com urgência para enviar um documento. Em 15 minutos estava tudo pronto. Atendimento excelente e muito rápido."</div>
+        <div class="test-footer"><div class="test-avatar">CR</div><div><div class="test-name">Carlos R.</div><div class="test-role">Advogado · São José/SC</div></div></div>
+      </div>
+      <div class="test-card">
+        <div class="stars"><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i></div>
+        <div class="test-text">"Como MEI nunca imaginei que fosse tão simples. Me ajudaram a escolher o certificado certo e instalaram no meu notebook por videochamada. Recomendo!"</div>
+        <div class="test-footer"><div class="test-avatar">MS</div><div><div class="test-name">Mariana S.</div><div class="test-role">MEI · Palhoça/SC</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section diff-sec" id="faq">
+  <div class="container">
+    <div class="text-center fade-up">
+      <div class="sec-eyebrow">Dúvidas frequentes</div>
+      <h2 class="sec-title">Perguntas mais comuns</h2>
+      <p class="sec-sub">Se tiver outra dúvida, fale com a gente pelo WhatsApp.</p>
+    </div>
+    <div class="faq-list fade-up">
+      <div class="faq-item open">
+        <button class="faq-btn" onclick="toggleFaq(this)">O que é certificado digital? <i class="ti ti-plus"></i></button>
+        <div class="faq-body"><div class="faq-body-inner">O certificado digital é uma identidade eletrônica que confirma a autenticidade de uma pessoa física (e-CPF) ou jurídica (e-CNPJ) na internet. Possui validade jurídica plena e é reconhecido por bancos, governo e sistemas fiscais em todo o Brasil.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFaq(this)">Qual a diferença entre A1 e A3? <i class="ti ti-plus"></i></button>
+        <div class="faq-body"><div class="faq-body-inner">O A1 é armazenado como arquivo no computador ou celular, com validade de 1 ano — mais prático para uso diário. O A3 fica em um token físico USB, tem validade de até 3 anos e é indicado para quem usa o certificado em múltiplos dispositivos ou precisa de mais segurança.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFaq(this)">O processo é 100% online? <i class="ti ti-plus"></i></button>
+        <div class="faq-body"><div class="faq-body-inner">Sim. A validação de identidade é feita por videoconferência — basta ter câmera no computador ou celular e seus documentos em mãos (RG ou CNH + CPF). Não é necessário ir a nenhum cartório, banco ou loja física.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFaq(this)">Quanto tempo leva para emitir? <i class="ti ti-plus"></i></button>
+        <div class="faq-body"><div class="faq-body-inner">Em média entre 5 e 15 minutos. Após o pagamento confirmado, agendamos a videoconferência. Depois da validação aprovada, o certificado fica disponível para download imediatamente.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFaq(this)">O certificado tem validade jurídica? <i class="ti ti-plus"></i></button>
+        <div class="faq-body"><div class="faq-body-inner">Sim. Somos credenciados à ICP-Brasil (Infraestrutura de Chaves Públicas Brasileira), o sistema oficial do governo federal. Todos os certificados têm plena validade jurídica perante bancos, tribunais, Receita Federal e órgãos públicos.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFaq(this)">Quais documentos preciso? <i class="ti ti-plus"></i></button>
+        <div class="faq-body"><div class="faq-body-inner">Para e-CPF: RG ou CNH + CPF + comprovante de residência. Para e-CNPJ: documentos pessoais do responsável legal + contrato social ou certificado MEI + CNPJ. Nossa equipe orienta em cada etapa.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFaq(this)">Como funciona a renovação? <i class="ti ti-plus"></i></button>
+        <div class="faq-body"><div class="faq-body-inner">Avisamos por WhatsApp e e-mail antes do vencimento. A renovação segue o mesmo processo simplificado. Clientes que renovam conosco têm atendimento prioritário e desconto especial.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-sec">
+  <div class="cta-bg"></div>
+  <div class="container">
+    <div class="cta-inner fade-up">
+      <img src="logo-certqi.png" alt="Cert QI" class="cta-logo" />
+      <h2 class="cta-title">Pronto para regularizar sua assinatura digital?</h2>
+      <p class="cta-tagline">
+        <span>Sua identidade.&nbsp;</span>
+        <span>Seus negócios.&nbsp;</span>
+        <span class="hl">Sempre seguros.</span>
+      </p>
+      <p class="cta-sub">Fale com nosso especialista agora e emita seu certificado hoje mesmo. Rápido, seguro e sem burocracia.</p>
+      <div class="cta-actions">
+        <a href="https://wa.me/5548992174132?text=Ol%C3%A1!%20Quero%20emitir%20meu%20certificado%20digital." class="btn-wa" target="_blank" rel="noopener">
+          <i class="ti ti-brand-whatsapp"></i> Falar no WhatsApp agora
+        </a>
+        <a href="mailto:contato@certqi.com.br" class="btn-outline" style="color:#fff">
+          <i class="ti ti-mail"></i> Enviar e-mail
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <img src="logo-certqi.png" alt="Cert QI" class="footer-logo" />
+        <p class="footer-tag">Certificação digital rápida, segura e 100% online. Credenciados ICP-Brasil. Sua identidade. Seus negócios. Sempre seguros.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Produtos</div>
+        <ul class="footer-links">
+          <li><a href="#produtos">e-CPF A1</a></li>
+          <li><a href="#produtos">e-CNPJ A1</a></li>
+          <li><a href="#produtos">e-CNPJ A3</a></li>
+
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Informações</div>
+        <ul class="footer-links">
+          <li><a href="#como-funciona">Como funciona</a></li>
+          <li><a href="#para-quem">Para quem é</a></li>
+          <li><a href="#faq">Dúvidas frequentes</a></li>
+          <li><a href="#">Política de privacidade</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Contato</div>
+        <ul class="footer-links">
+          <li><a href="https://wa.me/5548992174132" target="_blank" rel="noopener"><i class="ti ti-brand-whatsapp" style="vertical-align:-2px;margin-right:5px"></i>(48) 9 9217-4132</a></li>
+          <li><a href="mailto:contato@certqi.com.br"><i class="ti ti-mail" style="vertical-align:-2px;margin-right:5px"></i>contato@certqi.com.br</a></li>
+          <li><a href="#"><i class="ti ti-map-pin" style="vertical-align:-2px;margin-right:5px"></i>Florianópolis · SC</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 Cert QI Certificação Digital. Todos os direitos reservados.</div>
+      <div class="footer-icp"><i class="ti ti-shield-check"></i> Credenciado ICP-Brasil</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Navbar scroll
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 60));
+
+  // Mobile menu
+  document.getElementById('hamburger').addEventListener('click', () => {
+    document.getElementById('mobileMenu').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  });
+  document.getElementById('mobileClose').addEventListener('click', closeMobile);
+  function closeMobile() {
+    document.getElementById('mobileMenu').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // FAQ
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const open = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!open) item.classList.add('open');
+  }
+
+  // Fade-up observer
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const href = a.getAttribute('href');
+      if (href.length > 1) {
+        e.preventDefault();
+        document.querySelector(href)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+</body>
+</html>
